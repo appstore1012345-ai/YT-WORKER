@@ -30,7 +30,6 @@ jobs:
         run: |
           python scripts/script_generator.py
           echo "✅ Script executed successfully"
-
 # Artifact upload step **commented out** to avoid red line on mobile
 #      - name: Upload generated script
 #        uses: actions/upload-artifact@v3
