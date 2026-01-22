@@ -21,8 +21,3 @@ jobs:
     - name: Run script
       run: |
         python scripts/script_generator.py
-- name: Upload generated script
-  uses: actions/upload-artifact@v4
-  with:
-    name: generated-script
-    path: output/script.txt
