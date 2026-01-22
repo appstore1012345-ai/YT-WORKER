@@ -2,27 +2,33 @@ name: Script Automation
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 6 * * *"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Download repo
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.10"
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-    - name: Run script
-      run: |
-        python scripts/script_generator.py
-# - name: Upload generated script
-#   uses: actions/upload-artifact@v3
-#   with:
-#     name: generated-script
-#     path: scripts/script_generator.py
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run Script
+        run: |
+          python scripts/script_generator.py
+          echo "Script run completed successfully ✅"
+
+# Artifact upload step comment out kiya gaya hai taaki mobile me red error na aaye
+#      - name: Upload generated script
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: generated-script
+#          path: scripts/script_generator.py
