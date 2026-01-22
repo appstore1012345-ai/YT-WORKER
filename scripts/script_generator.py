@@ -21,3 +21,10 @@ with open("generated_script.txt", "w", encoding="utf-8") as file:
 # Log print (GitHub Actions me dikhega)
 print("✅ Script generated successfully")
 print("🕒 Time:", datetime.now())
+# Existing script generation code ke baad
+
+# Output folder me save karo
+with open("output/script.txt", "w", encoding="utf-8") as f:
+    f.write(script)
+
+print("Saved to output/script.txt ✅")
