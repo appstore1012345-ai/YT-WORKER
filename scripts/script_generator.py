@@ -1,33 +1,41 @@
-from datetime import datetime
 
-# Topic (abhi hardcoded)
-topic = "Daily Motivation"
+import os
+from groq import Groq
 
-# Simple script generate
-script = f"""
-आज का विषय: {topic}
+# Load API key from GitHub Secrets
+api_key = os.getenv("GROQ_API_KEY")
 
-अगर आप रोज़ अपने लक्ष्य की ओर
-छोटे कदम बढ़ाते हैं,
-तो एक दिन बड़ी जीत ज़रूर मिलेगी।
+if not api_key:
+    raise ValueError("GROQ_API_KEY not found in environment variables")
 
-कभी हार मत मानो।
+# Initialize Groq client
+client = Groq(api_key=api_key)
+
+# Prompt for YouTube script
+prompt = """
+Write a 60-second YouTube Shorts script about an interesting fact.
+Use simple English.
+Add a strong hook in the first line.
 """
 
-# File me save karo
-with open("generated_script.txt", "w", encoding="utf-8") as file:
-    file.write(script)
+# Call Groq API
+response = client.chat.completions.create(
+    model="llama3-8b-8192",
+    messages=[
+        {"role": "user", "content": prompt}
+    ]
+)
 
-# Log print (GitHub Actions me dikhega)
+# Get generated script
+script = response.choices[0].message.content
+
+# Save output to file (repo me save hoga)
+output_path = "scripts/output_script.txt"
+with open(output_path, "w", encoding="utf-8") as f:
+    f.write(script)
+
 print("✅ Script generated successfully")
-print("🕒 Time:", datetime.now())
-# Existing script generation code ke baad
-
-# Output folder me save karo
-with open("output/script.txt", "w", encoding="utf-8") as f:
-    f.write(script)
-
-print("Saved to output/script.txt ✅")
-with open("scripts/output_script.txt", "w", encoding="utf-8") as f:
-    f.write(script)
-print("Script saved successfully ✅")
+print("📄 Saved at:", output_path)
+print("------ SCRIPT START ------")
+print(script)
+print("------- SCRIPT END -------")
