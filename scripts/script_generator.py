@@ -28,3 +28,8 @@ with open("output/script.txt", "w", encoding="utf-8") as f:
     f.write(script)
 
 print("Saved to output/script.txt ✅")
+- name: Upload generated script
+  uses: actions/upload-artifact@v3
+  with:
+    name: generated-script
+    path: scripts/script_generator.py
