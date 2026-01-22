@@ -28,3 +28,6 @@ with open("output/script.txt", "w", encoding="utf-8") as f:
     f.write(script)
 
 print("Saved to output/script.txt ✅")
+with open("scripts/output_script.txt", "w", encoding="utf-8") as f:
+    f.write(script)
+print("Script saved successfully ✅")
